@@ -1,0 +1,268 @@
+<!-- Autor: Marko Ćirić 2023/0133-->
+
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    <link rel="stylesheet" href="{% static 'css/publish-build.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="main-area">
+    <section class="publish-section">
+        <div class="publish-container">
+            <h1>Objavi svoj gotov računar</h1>
+            <p class="section-subtitle">Podeli sa zajednicom svoj računar</p>
+
+            <form class="publish-form" id="publishBuildForm" method="post" action="{% url 'publish_build_page' %}" enctype="multipart/form-data" >
+                {% csrf_token %}
+
+                {% if errors %}
+                <div class="error-container" style="background-color: #f8d7da; border: 1px solid #f5c6cb; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 20px;">
+                    <strong>Greške pri objavljenju:</strong>
+                    <ul style="margin: 8px 0 0 20px; padding: 0;">
+                        {% for error in errors %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+
+                <div class="form-section">
+                    <label for="name">Naziv računara (obavezno)</label>
+                    <input type="text" id="name" name="name" placeholder="Unesite naziv vaše konfiguracije (npr. Ultimate Gaming Build 2026)" required style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;" formnovalidate>
+                </div>
+
+                <div class="form-section">
+                    <h2>Slike računara (do 5 slika)</h2>
+                    <div class="image-upload-area" id="imageUploadArea" style="cursor: pointer; border: 2px dashed #ccc; padding: 20px; text-align: center;">
+                        <div class="upload-placeholder">
+                            <p>Klikni da dodate slike</p>
+                            <small>Maksimalno 5 slika</small>
+                        </div>
+                        <input type="file" id="imageInput" name="images[]" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="image-preview-container" id="imagePreviewContainer" style="display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap;"></div>
+                    <div id="imageError" class="error-message" style="color: red; margin-top: 5px;"></div>
+                </div>
+
+                <div class="form-section">
+                    <h2>Korišćene komponente</h2>
+                    <div class="components-list" id="componentsList">
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="border-bottom: 2px solid #ddd; text-align: left;">
+                                    <th style="padding: 8px;">Komponenta</th>
+                                    <th style="padding: 8px;">Izbor</th>
+                                    <th style="padding: 8px;">Cena</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for row in build_rows %}
+                                <tr style="border-bottom: 1px solid #eee;">
+                                    <td style="padding: 8px; font-weight: bold;">{{ row.label }}</td>
+                                    <td style="padding: 8px;">
+                                        {% if row.component %}
+                                            {{ row.component.manufacturer }} {{ row.component.name }}
+                                        {% else %}
+                                            <span style="color: #999; italic">Nije izabrano</span>
+                                        {% endif %}
+                                    </td>
+                                    <td style="padding: 8px;">{{ row.price_display|default:'-' }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                        <div style="margin-top: 15px; text-align: right; font-size: 1.2em; font-weight: bold;">
+                            Ukupna cena: {{ total_price_display }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <label for="description">Opis (obavezno)</label>
+                    <textarea id="description" name="description" placeholder="Opišite svoj računar, namenu, performanse..." required></textarea>
+                </div>
+
+                <div class="form-section">
+                    <h2>Rezultati benchmark softvera/igrica</h2>
+                    <div class="benchmark-table-wrapper">
+                        <table class="benchmark-table" id="benchmarkTable">
+                            <thead>
+                                <tr>
+                                    <th>Naziv softvera/igrice</th>
+                                    <th>Rezultat</th>
+                                    <th>Akcija</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkBody">
+                                <tr class="empty-row">
+                                    <td colspan="3" class="center">Nema unetih rezultata. Klikni "Dodaj rezultat" da počneš.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="add-benchmark-btn" id="addBenchmarkBtn">+ Dodaj rezultat</button>
+                    <div id="benchmarkError" class="error-message"></div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="publishBtn">Objavi računar</button>
+                    <a href="{% url 'configurator' %}" class="cancel-btn">Otkaži</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const imageUploadArea = document.getElementById("imageUploadArea");
+    const imageInput = document.getElementById("imageInput");
+    const imagePreviewContainer = document.getElementById("imagePreviewContainer");
+    const imageError = document.getElementById("imageError");
+
+    // Globalni niz u kojem čuvamo sve selektovane fajlove
+    let allSelectedFiles = [];
+
+    function updateUploadAreaState() {
+        if (allSelectedFiles.length >= 5) {
+            imageUploadArea.style.opacity = "0.5";
+            imageUploadArea.style.cursor = "not-allowed";
+            imageUploadArea.style.borderColor = "#ccc";
+            imageError.textContent = "Maksimalno 5 slika dostigli. Uklonite sliku da dodate novu.";
+        } else {
+            imageUploadArea.style.opacity = "1";
+            imageUploadArea.style.cursor = "pointer";
+            imageUploadArea.style.borderColor = "#ccc";
+            imageError.textContent = "";
+        }
+    }
+
+    imageUploadArea.addEventListener("click", function() {
+        if (allSelectedFiles.length < 5) {
+            imageInput.click();
+        }
+    });
+
+    imageInput.addEventListener("change", function() {
+        imageError.textContent = "";
+        const newFiles = Array.from(this.files);
+
+        // Check if adding new files would exceed the limit
+        if (allSelectedFiles.length + newFiles.length > 5) {
+            imageError.textContent = "Možete izabrati maksimalno 5 slika.";
+            // Reset the input to prevent adding more files
+            this.value = "";
+            return;
+        }
+
+        newFiles.forEach(file => {
+            if (!file.type.startsWith("image/")) return;
+
+            // Double-check we haven't exceeded the limit
+            if (allSelectedFiles.length >= 5) {
+                return;
+            }
+
+            allSelectedFiles.push(file);
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const wrapper = document.createElement("div");
+                wrapper.style.position = "relative";
+
+                const img = document.createElement("img");
+                img.src = e.target.result;
+                img.style.width = "80px";
+                img.style.height = "80px";
+                img.style.objectFit = "cover";
+                img.style.borderRadius = "4px";
+                img.style.border = "1px solid #ccc";
+
+                // Dugme za uklanjanje pojedinačne slike iz preview-a
+                const removeBtn = document.createElement("button");
+                removeBtn.textContent = "×";
+                removeBtn.type = "button";
+                removeBtn.style.position = "absolute";
+                removeBtn.style.top = "-5px";
+                removeBtn.style.right = "-5px";
+                removeBtn.style.background = "red";
+                removeBtn.style.color = "white";
+                removeBtn.style.border = "none";
+                removeBtn.style.borderRadius = "50%";
+                removeBtn.style.cursor = "pointer";
+                removeBtn.style.width = "18px";
+                removeBtn.style.height = "18px";
+                removeBtn.style.fontSize = "12px";
+                removeBtn.style.lineHeight = "18px";
+                removeBtn.style.textAlign = "center";
+
+                removeBtn.addEventListener("click", function() {
+                    const index = allSelectedFiles.indexOf(file);
+                    if (index > -1) {
+                        allSelectedFiles.splice(index, 1);
+                    }
+                    wrapper.remove();
+                    updateFormFileInput();
+                    updateUploadAreaState();
+                });
+
+                wrapper.appendChild(img);
+                wrapper.appendChild(removeBtn);
+                imagePreviewContainer.appendChild(wrapper);
+            };
+            reader.readAsDataURL(file);
+        });
+
+        updateFormFileInput();
+        updateUploadAreaState();
+        // Reset input so selecting the same file again will trigger the change event
+        this.value = "";
+    });
+
+    // Pomoćna funkcija koja sinhronizuje naš niz sa stvarnim input poljem forme pred slanje
+    function updateFormFileInput() {
+        const dataTransfer = new DataTransfer();
+        allSelectedFiles.forEach(file => dataTransfer.items.add(file));
+        imageInput.files = dataTransfer.files;
+    }
+
+    // Ensure files are synced to the input field before form submission
+    document.getElementById("publishBuildForm").addEventListener("submit", function() {
+        updateFormFileInput();
+    });
+
+    // Ostatak tvog koda za dinamičko dodavanje benchmark redova...
+    const addBenchmarkBtn = document.getElementById("addBenchmarkBtn");
+    const benchmarkBody = document.getElementById("benchmarkBody");
+
+    if (addBenchmarkBtn && benchmarkBody) {
+        addBenchmarkBtn.addEventListener("click", function() {
+            const emptyRow = benchmarkBody.querySelector(".empty-row");
+            if (emptyRow) emptyRow.remove();
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><input type="text" name="benchmark_name[]" placeholder="Npr. Cyberpunk 2077" required style="width:90%; padding:6px;"></td>
+                <td><input type="text" name="benchmark_value[]" placeholder="Npr. 85 FPS" required style="width:90%; padding:6px;"></td>
+                <td><button type="button" class="remove-row-btn" style="color:red; background:none; border:none; cursor:pointer; font-weight:bold;">Ukloni</button></td>
+            `;
+
+            tr.querySelector(".remove-row-btn").addEventListener("click", function() {
+                tr.remove();
+                if (benchmarkBody.children.length === 0) {
+                    benchmarkBody.innerHTML = `
+                        <tr class="empty-row">
+                            <td colspan="3" class="center">Nema unetih rezultata. Klikni "Dodaj rezultat" da počneš.</td>
+                        </tr>
+                    `;
+                }
+            });
+            benchmarkBody.appendChild(tr);
+        });
+    }
+});
+</script>
+{% endblock %}

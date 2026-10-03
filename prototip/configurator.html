@@ -1,0 +1,171 @@
+<!-- Autor: Aleksandar Rašković -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklopi.me</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/configurator.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="configurator-layout">
+    <section class="build-area">
+        <h1 class="page-title">Trenutna konfiguracija</h1>
+        
+        <div class="component-table">
+            <div class="table-header">
+                <div class="col-cat">Komponenta</div>
+                <div class="col-selection">Izbor</div>
+                <div class="col-price">Cena</div>
+                <div class="col-action"></div>
+            </div>
+
+            <div class="table-row">
+                <div class="col-cat">CPU</div>
+                <div class="col-selection empty">Izaberite CPU...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj CPU</a>
+                </div>
+            </div>
+
+            <div class="table-row">
+                <div class="col-cat">CPU Hladnjak</div>
+                <div class="col-selection empty">Izaberite CPU hladnjak...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj CPU Hladnjak</a>
+                </div>
+            </div>
+
+            <!-- <div class="table-row">
+                <div class="col-cat">Matična ploča</div>
+                <div class="col-selection empty">Izaberite matičnu ploču...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj Matičnu ploču</a>
+                </div>
+            </div> -->
+
+            <div class="table-row">
+                <div class="col-cat">Matična ploča</div>
+                <div class="col-selection"><a href="component-detail.html">Gigabyte X870E AORUS ELITE WIFI7</a></div>
+                <div class="col-price">28.000 RSD</div>
+                <div class="col-action">
+                    <a href="#" class="remove-btn">Ukloni Matičnu ploču</a>
+                </div>
+            </div>
+
+            <div class="table-row">
+                <div class="col-cat">RAM</div>
+                <div class="col-selection empty">Izaberite memoriju...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj RAM</a>
+                </div>
+            </div>
+
+            <div class="table-row">
+                <div class="col-cat">Disk</div>
+                <div class="col-selection empty">Izaberite disk...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj Disk</a>
+                </div>
+            </div>
+
+            <div class="table-row">
+                <div class="col-cat">GPU</div>
+                <div class="col-selection empty">Izaberite GPU...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj GPU</a>
+                </div>
+            </div>
+
+            <div class="table-row">
+                <div class="col-cat">Kućište</div>
+                <div class="col-selection empty">Izaberite kućište...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj Kućište</a>
+                </div>
+            </div>
+
+            <div class="table-row">
+                <div class="col-cat">Napajanje</div>
+                <div class="col-selection empty">Izaberite napajanje...</div>
+                <div class="col-price">-</div>
+                <div class="col-action">
+                    <a href="component-search.html" class="add-btn">Dodaj Napajanje</a>
+                </div>
+            </div>
+
+            <div class="table-footer">
+                <div class="total-label">Total:</div>
+                <div class="total-price">28.000 RSD</div>
+                <a href="#" class="buy-all-btn">Kupi sve</a>
+                <a href="publish-build.html" class="publish-btn">Objavi</a>
+            </div>
+        </div>
+    </section>
+
+    <aside class="ai-sidebar">
+        <div class="chat-header">
+            <h3>Konfigurator</h3>
+        </div>
+        
+        <div class="chat-history">
+            <div class="message user-message">
+                Nađi mi najbolje kompatibilne procesore ispod 60000 RSD.
+            </div>
+            
+            <div class="message ai-message">
+                <div class="ai-recommendations">
+                    <div class="rec-card">
+                        <span class="rec-name">AMD Ryzen 7 9800X3D</span>
+                        <span class="rec-price">52.800 RSD</span>
+                        <button class="rec-add">Dodaj</button>
+                    </div>
+                    <div class="rec-card">
+                        <span class="rec-name">AMD Ryzen 9 7900X</span>
+                        <span class="rec-price">54.500 RSD</span>
+                        <button class="rec-add">Dodaj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" placeholder="Unesite zahtev">
+            <button class="send-btn">Pošalji</button>
+        </div>
+    </aside>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+</body>
+</html>

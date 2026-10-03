@@ -1,0 +1,154 @@
+<!-- Autor: Aleksandar Rašković 2023/0043, AI chat: Marko Ćirić 2023/0133-->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/configurator.css' %}">
+    <link rel="stylesheet" href="{% static 'css/configurator_chat.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="build-area">
+        <h1 class="page-title">Trenutna konfiguracija</h1>
+
+        {% if compatibility_reason != 'Empty' %}
+        	{% if compatibility_ok %}
+            <div class="compatibility-banner compatibility-ok">Konfiguracija je kompatibilna.</div>
+            {% else %}
+            <div class="compatibility-banner compatibility-error">{{ compatibility_reason }}</div>
+            {% endif %}
+        {% endif %}
+
+        <div class="component-table">
+            <div class="table-header">
+                <div class="col-cat">Komponenta</div>
+                <div class="col-selection">Izbor</div>
+                <div class="col-price">Cena</div>
+                <div class="col-action"></div>
+            </div>
+
+            {% for row in build_rows %}
+            <div class="table-row" data-component-type="{{ row.component_type }}">
+                <div class="col-cat">{{ row.label }}</div>
+
+                {% if row.component %}
+                    <div class="col-selection">
+                        <input type="hidden" class="active-component-id" value="{{ row.component.id }}">
+                        <a href="{% url 'component_detail' row.component.id %}">{{ row.component.name }}</a>
+                    </div>
+                    <div class="col-price">{{ row.price_display|default:'-' }}</div>
+                    <form method="post" action="{% url 'configurator_remove' %}" class="col-action">
+                    {% csrf_token %}
+                        <button type="submit" class="remove-btn">Ukloni</button>
+                        <input type="hidden" name="component_type" value="{{ row.component_type }}">
+                    </form>
+                {% else %}
+                    <div class="col-selection empty">Izaberite {{ row.label|lower }}...</div>
+                    <div class="col-price">-</div>
+                    <div class="col-action">
+                        <a href="{% url 'component_search' row.component_type %}{% if row.filter_params %}?{{ row.filter_params }}{% endif %}" class="add-btn">Dodaj</a>
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <div class="table-footer">
+                <div class="total-label">Total:</div>
+                <div class="total-price">{{ total_price_display }}</div>
+                <a href="#" class="buy-all-btn">Kupi sve</a>
+                <a href="{% url 'publish_build_page' %}" class="publish-btn">Objavi</a>
+            </div>
+        </div>
+    </section>
+
+    <aside class="ai-sidebar">
+        <div class="chat-header">
+            <h3>Konfigurator</h3>
+        </div>
+
+        <div class="chat-history" id="chat-history">
+            <div class="message ai-message">
+                Zdravo! Opišite mi kakvu komponentu ili konfiguraciju tražite
+                (npr. "Nađi mi grafičku karticu ispod 50000 RSD" ili "Sastavi mi
+                gaming konfiguraciju za 150000 RSD").
+            </div>
+        </div>
+
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Unesite zahtev" autocomplete="off">
+            <button class="send-btn" id="chat-send-btn">Pošalji</button>
+        </div>
+    </aside>
+
+    {{ chat_history|json_script:"chat-history-data" }}
+
+    <!-- Modal for links -->
+    <div id="links-modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+        <div style="background:white; padding:30px; border-radius:8px; max-width:500px; max-height:70vh; overflow-y:auto; box-shadow:0 2px 10px rgba(0,0,0,0.2);">
+            <h3 style="margin-top:0;">Linkovi za kupovinu komponenti</h3>
+            <div id="links-container"></div>
+            <button id="close-modal-btn" style="width:100%; padding:10px; margin-top:20px; cursor:pointer; background:#007bff; color:white; border:none; border-radius:4px;">Zatvori</button>
+        </div>
+    </div>
+
+    <script>
+        window.CONFIGURATOR_CHAT_URL = "{% url 'configurator_chat' %}";
+        window.CONFIGURATOR_ADD_URL = "{% url 'configurator_add' %}";
+        window.CONFIGURATOR_LINKS_URL = "{% url 'get_all_component_links' %}";
+        
+        // Kupi sve button handler
+        document.querySelector('.buy-all-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            fetch(window.CONFIGURATOR_LINKS_URL)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.links && data.links.length > 0) {
+                        const linksContainer = document.getElementById('links-container');
+                        linksContainer.innerHTML = '';
+                        
+                        data.links.forEach(link => {
+                            const linkDiv = document.createElement('div');
+                            linkDiv.style.marginBottom = '10px';
+                            linkDiv.style.padding = '10px';
+                            linkDiv.style.border = '1px solid #ddd';
+                            linkDiv.style.borderRadius = '4px';
+                            
+                            const linkEl = document.createElement('a');
+                            linkEl.href = link.url;
+                            linkEl.target = '_blank';
+                            linkEl.rel = 'noopener noreferrer';
+                            linkEl.style.color = '#007bff';
+                            linkEl.style.textDecoration = 'none';
+                            linkEl.style.fontWeight = 'bold';
+                            linkEl.textContent = link.name + ' - ' + link.shop;
+                            
+                            linkDiv.appendChild(linkEl);
+                            linksContainer.appendChild(linkDiv);
+                        });
+                        
+                        document.getElementById('links-modal').style.display = 'flex';
+                    } else {
+                        alert('Nema komponenti sa dostupnim cenama u vašoj konfiguraciji.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Greška:', error);
+                    alert('Došlo je do greške pri učitavanju linkova.');
+                });
+        });
+        
+        // Close modal button
+        document.getElementById('close-modal-btn').addEventListener('click', function() {
+            document.getElementById('links-modal').style.display = 'none';
+        });
+        
+        // Close modal when clicking outside
+        document.getElementById('links-modal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        });
+    </script>
+    <script src="{% static 'js/configurator_chat.js' %}"></script>
+{% endblock %}

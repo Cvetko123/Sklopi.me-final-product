@@ -1,0 +1,128 @@
+<!-- Autor: Aleksandar Rašković -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklopi.me</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/component-search.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="search-layout">
+    <aside class="sidebar">
+        <details class="sort-dropdown">
+            <summary class="sort-btn">Sortiraj po...</summary>
+            <div class="sort-content">
+                <label><input type="radio" name="sort"> Cena: Rastuće</label>
+                <label><input type="radio" name="sort"> Cena: Opadajuće</label>
+                <label><input type="radio" name="sort"> Naziv: A do Z</label>
+                <label><input type="radio" name="sort"> Naziv: Z do A</label>
+            </div>
+        </details>
+
+        <div class="filter-container">
+            <div class="filter-group">
+                <div class="filter-title">Proizvođač</div>
+                <label><input type="checkbox"> AMD</label>
+                <label><input type="checkbox"> Intel</label>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-title">Cena</div>
+                <div class="input-row">
+                    <input type="number" placeholder="Min">
+                    <input type="number" placeholder="Max">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-title">Broj jezgara</div>
+                <div class="input-row">
+                    <input type="number" placeholder="Min">
+                    <input type="number" placeholder="Max">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-title">Soket</div>
+                <label><input type="checkbox"> AM5</label>
+                <label><input type="checkbox"> AM4</label>
+                <label><input type="checkbox"> LGA 1700</label>
+                <label><input type="checkbox"> LGA 1200</label>
+            </div>
+
+            <button class="search-action-btn">Primeni filtere</button>
+        </div>
+    </aside>
+
+    <section class="results-area">
+        <div class="search-bar">
+            <input type="text" class="search-box" placeholder="Pretraži...">
+            <button class="search-action-btn primary">Pretraži</button>
+            <a href="component-edit.html" class="add-new-component-btn">+ Dodaj komponentu</a>
+        </div>
+        
+        <div class="results-list">
+            <div class="result-item">
+                <a href="component-detail.html" class="item-name">AMD Ryzen 7 7800X3D</a>
+                <span class="item-spec">8 Jezgara</span>
+                <span class="item-spec">AM5</span>
+                <span class="item-price">45000 RSD</span>
+                <a href="configurator.html" class="add-btn">Dodaj</a>
+            </div>
+            <div class="result-item">
+                <a href="component-detail.html" class="item-name">Intel Core i5-13600K</a>
+                <span class="item-spec">14 Jezgara</span>
+                <span class="item-spec">LGA 1700</span>
+                <span class="item-price">35000 RSD</span>
+                <a href="configurator.html" class="add-btn">Dodaj</a>
+            </div>
+            <div class="result-item">
+                <a href="component-detail.html" class="item-name">AMD Ryzen 5 5600X</a>
+                <span class="item-spec">6 Jezgara</span>
+                <span class="item-spec">AM4</span>
+                <span class="item-price">18000 RSD</span>
+                <a href="configurator.html" class="add-btn">Dodaj</a>
+            </div>
+            <div class="result-item">
+                <a href="component-detail.html" class="item-name">Intel Core i9-14900K</a>
+                <span class="item-spec">24 Jezgara</span>
+                <span class="item-spec">LGA 1700</span>
+                <span class="item-price">68000 RSD</span>
+                <a href="configurator.html" class="add-btn">Dodaj</a>
+            </div>
+        </div>
+
+        <div class="empty-state" style="display: none;">
+            <h3>Nema rezultata</h3>
+            <p>U bazi podataka ne postoje komponente koje ispunjavaju zadate kriterijume.</p>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+</body>
+</html>

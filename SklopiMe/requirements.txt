@@ -1,0 +1,12 @@
+Django
+python-dotenv
+mysqlclient
+Pillow
+django-extensions
+pydotplus
+docutils
+playwright
+rapidfuzz
+selenium
+webdriver-manager
+openai

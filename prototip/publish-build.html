@@ -1,0 +1,106 @@
+<!-- Autor: Aleksandar Cvetković -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Objavi svoj build | Sklopi.me</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/publish-build.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-area">
+    <section class="publish-section">
+        <div class="publish-container">
+            <h1>Objavi svoj gotov računar</h1>
+            <p class="section-subtitle">Podeli sa zajednicom svoj računar</p>
+
+            <form class="publish-form" id="publishBuildForm">
+                <!-- Images Section -->
+                <div class="form-section">
+                    <h2>Slike računara (do 5 slika)</h2>
+                    <div class="image-upload-area" id="imageUploadArea">
+                        <div class="upload-placeholder">
+                            <p>Klikni da dodate slike</p>
+                            <small>Maksimalno 5 slika</small>
+                        </div>
+                        <input type="file" id="imageInput" multiple accept="image/*" style="display: none;">
+                    </div>
+                    <div class="image-preview-container" id="imagePreviewContainer"></div>
+                    <div id="imageError" class="error-message"></div>
+                </div>
+
+                <!-- Components Section -->
+                <div class="form-section">
+                    <h2>Korišćene komponente</h2>
+                    <div class="components-list" id="componentsList">
+                        <p class="placeholder">Nema odabranih komponenti</p>
+                    </div>
+                </div>
+
+                <!-- Description Section -->
+                <div class="form-section">
+                    <label for="description">Opis (obavezno)</label>
+                    <textarea id="description" name="description" placeholder="Opišite svoj računar, namenu, performanse..." required></textarea>
+                </div>
+
+                <!-- Benchmark Results Section -->
+                <div class="form-section">
+                    <h2>Rezultati benchmark softvera/igrica (obavezno)</h2>
+                    <div class="benchmark-table-wrapper">
+                        <table class="benchmark-table" id="benchmarkTable">
+                            <thead>
+                                <tr>
+                                    <th>Naziv softvera/igrice</th>
+                                    <th>Rezultat</th>
+                                    <th>Akcija</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkBody">
+                                <tr class="empty-row">
+                                    <td colspan="3" class="center">Nema unetih rezultata. Klikni "Dodaj rezultat" da počneš.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <button type="button" class="add-benchmark-btn" id="addBenchmarkBtn">+ Dodaj rezultat</button>
+                    <div id="benchmarkError" class="error-message"></div>
+                </div>
+
+                <!-- Form Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn" id="publishBtn">Objavi računar</button>
+                    <a href="configurator.html" class="cancel-btn">Otkaži</a>
+                </div>
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+<script src="js/publish-build.js"></script>
+</body>
+</html>
+

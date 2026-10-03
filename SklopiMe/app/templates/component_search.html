@@ -1,0 +1,121 @@
+<!-- Autor: Aleksandar Rašković 2023/0043 -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/component-search.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <aside class="sidebar">
+        <form method="get" class="sort-dropdown">
+            <details>
+                <summary class="sort-btn">Sortiraj po...</summary>
+                <div class="sort-content">
+                    {% for param in sort_hidden_params %}
+                        <input type="hidden" name="{{ param.name }}" value="{{ param.value }}">
+                    {% endfor %}
+                    <label><input type="radio" name="sort" value="price_asc" onchange="this.form.submit()" {% if sort == 'price_asc' %}checked{% endif %}> Cena: Rastuće</label>
+                    <label><input type="radio" name="sort" value="price_desc" onchange="this.form.submit()" {% if sort == 'price_desc' %}checked{% endif %}> Cena: Opadajuće</label>
+                    <label><input type="radio" name="sort" value="name_asc" onchange="this.form.submit()" {% if sort == 'name_asc' %}checked{% endif %}> Naziv: A do Z</label>
+                    <label><input type="radio" name="sort" value="name_desc" onchange="this.form.submit()" {% if sort == 'name_desc' %}checked{% endif %}> Naziv: Z do A</label>
+                </div>
+            </details>
+        </form>
+
+        <form method="get" class="filter-container">
+            {% for param in filter_hidden_params %}
+                <input type="hidden" name="{{ param.name }}" value="{{ param.value }}">
+            {% endfor %}
+            {% for sidebar_filter in sidebar_filters %}
+                <div class="filter-group">
+                    <div class="filter-title">{{ sidebar_filter.label }}</div>
+                    {% if sidebar_filter.kind == 'choice' %}
+                        {% for option in sidebar_filter.options %}
+                            <label>
+                                <input
+                                        type="checkbox"
+                                        name="{{ sidebar_filter.name }}"
+                                        value="{{ option.value }}"
+                                        {% if option.checked %}checked{% endif %}
+                                >
+                                {{ option.value }}
+                            </label>
+                        {% endfor %}
+
+                    {% elif sidebar_filter.kind == 'range' %}
+                        <div class="input-row">
+                            <input
+                                    type="number"
+                                    name="{{ sidebar_filter.min_name }}"
+                                    placeholder="Min"
+                                    value="{{ sidebar_filter.min_value }}"
+                            >
+                            <input
+                                    type="number"
+                                    name="{{ sidebar_filter.max_name }}"
+                                    placeholder="Max"
+                                    value="{{ sidebar_filter.max_value }}"
+                            >
+                        </div>
+                    {% elif sidebar_filter.kind == 'choice_list' %}
+                        {% for option in sidebar_filter.options %}
+                            <label>
+                                <input
+                                        type="checkbox"
+                                        name="{{ sidebar_filter.name }}"
+                                        value="{{ option.value }}"
+                                        {% if option.checked %}checked{% endif %}
+                                >
+                                {{ option.value }}
+                            </label>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <button class="search-action-btn">Primeni filtere</button>
+        </form>
+    </aside>
+
+    <section class="results-area">
+        <form method="get" class="search-bar">
+            {% for param in search_hidden_params %}
+                <input type="hidden" name="{{ param.name }}" value="{{ param.value }}">
+            {% endfor %}
+            <input type="text" name="q" class="search-box" placeholder="Pretraži..." value="{{ search_query }}">
+            <button class="search-action-btn primary">Pretraži</button>
+            {% if request.user.is_superuser %}
+                <a href="/admin/app/{{ component_type }}" class="add-new-component-btn">+ Dodaj komponentu</a>
+            {% endif %}
+        </form>
+
+        {% if results %}
+        	<div class="results-list">
+                {% for result in results %}
+                    <div class="result-item">
+                        <a href="{% url 'component_detail' result.component.id %}" class="item-name">{{ result.component.name }}</a>
+                        {% for spec in result.spotlight_specs %}
+                            <span class="item-spec">{{ spec.label }}: {{ spec.value }}</span>
+                        {% endfor %}
+                        <span class="item-price">{{ result.price_display }}</span>
+                        <form method="post" action="{% url 'configurator_add_manual' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="add-btn">Dodaj</button>
+                            <input type="hidden" name="component_id" value="{{ result.component.id }}">
+                            <input type="hidden" name="component_type" value="{{ result.type }}">
+                        </form>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% else %}
+            <div class="empty-state">
+                <h3>Nema rezultata</h3>
+                <p>U bazi podataka ne postoje komponente koje ispunjavaju zadate kriterijume.</p>
+            </div>
+        {% endif %}
+    </section>
+{% endblock %}

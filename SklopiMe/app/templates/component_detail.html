@@ -1,0 +1,114 @@
+<!-- Autor: Aleksandar Cvetković -->
+<!-- Pretvorio u django template: Aleksandar Raskovic 2023/0043 -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/component-detail.css' %}">
+{% endblock %}
+
+{% block content %}
+    <section class="component-detail-section">
+        <div class="component-container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="{% url 'components' %}">Komponente</a> <span>/</span> <span>{{ component_label }}</span> <span>/</span> <span>{{ component.manufacturer }} {{ component.name }}</span>
+            </div>
+
+            <!-- Main Content -->
+            <div class="component-content">
+                <!-- Left Column: Image -->
+                <div class="left-column">
+                    <div class="image-container">
+                        <img src="{{ image_url }}" alt="{{ component.manufacturer }} {{ component.name }}" class="component-image" onerror="this.onerror=null; this.src='{% static 'images/cpu_stock.avif' %}';">
+                    </div>
+                    <div class="description-section">
+                        <h2>Opis</h2>
+                        <p>{{ component.description }}</p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Details -->
+                <div class="right-column">
+                    <!-- Component Header -->
+                    <div class="component-header">
+                        <h1>{{ component.manufacturer }} {{ component.name }}</h1>
+                        <p class="component-category">{{ component_label }}</p>
+                    </div>
+
+                    <form method="post" action="{% url 'configurator_add_manual' %}">
+                        {% csrf_token %}
+                        <button type="submit" class="add-btn" style="border: none; cursor: pointer;">Dodaj</button>
+                        <input type="hidden" name="component_id" value="{{ component.id }}">
+                        <input type="hidden" name="component_type" value="{{ component_type }}">
+                    </form>
+                    {% if request.user.is_superuser %}
+                    	<a href="/admin/app/{{ component_type }}/{{ component.id }}" class="edit-component-btn"><i class="fa-regular fa-pen-to-square"></i> Izmeni komponentu</a>
+                    {% endif %}
+
+                    <!-- Price Highlight -->
+                    <div class="price-highlight">
+                        <span class="label">Najniža cena:</span>
+                        <span class="price">{{ lowest_price_display }}</span>
+                        <span class="store">{{ lowest_price_store }}</span>
+                    </div>
+
+                    <!-- Specifications -->
+                    <div class="specs-section">
+                        <h2>Specifikacije</h2>
+                        <div class="specs-grid">
+                            {% for spec in detail_specs %}
+                                <div class="spec-item">
+                                    <span class="spec-label">{{ spec.label }}</span>
+                                    <span class="spec-value">{{ spec.value }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <!-- Store Prices -->
+                    <div class="prices-section">
+                        <h2>Cene po prodavnicama</h2>
+                        <div class="prices-table-wrapper">
+                            <table class="prices-table">
+                                <thead>
+                                    <tr>
+                                        <th>Prodavnica</th>
+                                        <th>Cena</th>
+                                        <th>Akcija</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for price in prices %}
+                                        <tr {% if forloop.first %}class="best-price"{% endif %}>
+                                            <td>
+                                                {% if forloop.first %}
+                                                    <div class="store-info">
+                                                        <span class="store-name">{{ price.shopname }}</span>
+                                                        <span class="best-badge">Najbolja cena</span>
+                                                    </div>
+                                                {% else %}
+                                                    <span class="store-name">{{ price.shopname }}</span>
+                                                {% endif %}
+                                            </td>
+                                            <td class="price-cell">{{ price.price }} RSD</td>
+                                            <td>
+                                                <a href="{{ price.link }}" class="btn-small" target="_blank">Kupi</a>
+                                            </td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td colspan="3">Trenutno nema dostupnih ponuda.</td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

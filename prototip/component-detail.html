@@ -1,0 +1,188 @@
+<!-- Autor: Aleksandar Cvetković -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Komponenta detalji | Sklopi.me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/component-detail.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Account</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-area">
+    <section class="component-detail-section">
+        <div class="component-container">
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="components.html">Komponente</a> <span>/</span> <span>Procesori</span> <span>/</span> <span>Intel Core i9-13900K</span>
+            </div>
+
+            <!-- Main Content -->
+            <div class="component-content">
+                <!-- Left Column: Image -->
+                <div class="left-column">
+                    <div class="image-container">
+                        <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=500" alt="Intel Core i9-13900K" class="component-image">
+                    </div>
+                    <div class="description-section">
+                        <h2>Opis</h2>
+                        <p>
+                            Intel Core i9-13900K je najmoćniji procesor iz Intel 13. generacije. Idealan je za gaming, 3D rendering, video editovanje i sve druge zahtevne zadatke. Sa 24 jezgra (8 P-cores + 16 E-cores) i do 32 niti, ovaj procesor pruža neverovatnu performansu.
+                        </p>
+                        <p>
+                            Novi Raptor Lake dizajn donosi poboljšanu energetsku efikasnost i brzinu. Kompatibilan je sa LGA1700 socket-om i podržava DDR5 memoriju. Idealan izbor za profesionalce i entuzijaste koji žele najbrži procesor.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Column: Details -->
+                <div class="right-column">
+                    <!-- Component Header -->
+                    <div class="component-header">
+                        <h1>Intel Core i9-13900K</h1>
+                        <p class="component-category">Procesor / CPU</p>
+                    </div>
+
+                    <!-- Dodao sam ti ovde dugme za dodavanje u konfigurator -Coa -->
+                    <a href="configurator.html" class="add-btn">Dodaj</a>
+                    <a href="component-edit.html" class="edit-component-btn"><i class="fa-regular fa-pen-to-square"></i> Izmeni komponentu</a>
+
+                    <!-- Price Highlight -->
+                    <div class="price-highlight">
+                        <span class="label">Najniža cena:</span>
+                        <span class="price">45.000 RSD</span>
+                        <span class="store">kod Kompjuterskog sveta</span>
+                    </div>
+
+                    <!-- Specifications -->
+                    <div class="specs-section">
+                        <h2>Specifikacije</h2>
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <span class="spec-label">Arhitektura</span>
+                                <span class="spec-value">Raptor Lake</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Jezgra / Niti</span>
+                                <span class="spec-value">24 / 32</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Frekvencija</span>
+                                <span class="spec-value">3.0 - 5.8 GHz</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">TDP</span>
+                                <span class="spec-value">125W</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Socket</span>
+                                <span class="spec-value">LGA1700</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Cache</span>
+                                <span class="spec-value">36 MB</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Proizvođač</span>
+                                <span class="spec-value">Intel</span>
+                            </div>
+                            <div class="spec-item">
+                                <span class="spec-label">Grafika</span>
+                                <span class="spec-value">Intel UHD 770</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Store Prices -->
+                    <div class="prices-section">
+                        <h2>Cene po prodavnicama</h2>
+                        <div class="prices-table-wrapper">
+                            <table class="prices-table">
+                                <thead>
+                                    <tr>
+                                        <th>Prodavnica</th>
+                                        <th>Cena</th>
+                                        <th>Akcija</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="best-price">
+                                        <td>
+                                            <div class="store-info">
+                                                <span class="store-name">Kompjuterski svet</span>
+                                                <span class="best-badge">Najbolja cena</span>
+                                            </div>
+                                        </td>
+                                        <td class="price-cell">45.000 RSD</td>
+                                        <td>
+                                            <a href="#" class="btn-small">Kupi</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="store-name">Tehnomanija</span>
+                                        </td>
+                                        <td class="price-cell">46.500 RSD</td>
+                                        <td>
+                                            <a href="#" class="btn-small">Kupi</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="store-name">PC Kamp</span>
+                                        </td>
+                                        <td class="price-cell">47.200 RSD</td>
+
+                                        <td>
+                                            <a href="#" class="btn-small">Kupi</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <span class="store-name">Informatika Plus</span>
+                                        </td>
+                                        <td class="price-cell">48.000 RSD</td>
+                                        <td>
+                                            <a href="#" class="btn-small">Kupi</a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+</body>
+</html>
+

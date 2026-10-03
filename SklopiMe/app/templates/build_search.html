@@ -1,0 +1,205 @@
+<!-- Autor: Marko Ciric 2023/0133 -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/build-search.css' %}">
+    <style>
+        .main-area {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .sidebar {
+            width: 280px;
+            min-width: 280px;
+        }
+
+        .results-area {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .results-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            height: 120px;
+            min-height: 120px;
+            max-height: 120px;
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 10px 24px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .result-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .build-thumbnail {
+            width: 100px;
+            height: 100px;
+            min-width: 100px;
+            max-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: 6px;
+        }
+
+        .build-thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .build-info-col {
+            flex: 1;
+            padding: 0 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-width: 0;
+        }
+
+        .item-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #222;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-bottom: 4px;
+        }
+
+        .item-user {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .specs-col {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            min-width: 90px;
+            max-width: 90px;
+            padding: 0 10px;
+        }
+
+        .spec-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .item-price {
+            min-width: 140px;
+            max-width: 140px;
+            text-align: right;
+            font-weight: 700;
+            font-size: 20px;
+            color: #111;
+            white-space: nowrap;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <aside class="sidebar">
+        <form method="GET" class="sort-dropdown">
+            <details>
+                <summary class="sort-btn">Sortiraj po...</summary>
+                <div class="sort-content">
+                    <input type="hidden" name="q" value="{{ search_query }}">
+                    <input type="hidden" name="min_price" value="{{ min_price }}">
+                    <input type="hidden" name="max_price" value="{{ max_price }}">
+
+                    <label><input type="radio" name="sort" value="price_asc" onchange="this.form.submit()" {% if sort == 'price_asc' %}checked{% endif %}> Cena: Rastuće</label>
+                    <label><input type="radio" name="sort" value="price_desc" onchange="this.form.submit()" {% if sort == 'price_desc' %}checked{% endif %}> Cena: Opadajuće</label>
+                    <label><input type="radio" name="sort" value="name_asc" onchange="this.form.submit()" {% if sort == 'name_asc' %}checked{% endif %}> Naziv: od A do Z</label>
+                    <label><input type="radio" name="sort" value="name_desc" onchange="this.form.submit()" {% if sort == 'name_desc' %}checked{% endif %}> Naziv: od Z do A</label>
+                    <label><input type="radio" name="sort" value="most_liked" onchange="this.form.submit()" {% if sort == 'most_liked' %}checked{% endif %}> Popularnost: Najviše lajkova</label>
+                    <label><input type="radio" name="sort" value="most_disliked" onchange="this.form.submit()" {% if sort == 'most_disliked' %}checked{% endif %}> Popularnost: Najviše dislajkova</label>
+                </div>
+            </details>
+        </form>
+
+        <form class="filter-container" method="GET" action="{% url 'build_search' %}">
+            <input type="hidden" name="q" value="{{ search_query }}">
+            <input type="hidden" name="sort" value="{{ sort }}">
+
+            <div class="filter-group">
+                <div class="filter-title">Cena</div>
+                <div class="input-row">
+                    <input type="number" name="min_price" placeholder="Min" value="{{ min_price }}">
+                    <input type="number" name="max_price" placeholder="Max" value="{{ max_price }}">
+                </div>
+            </div>
+
+            <button type="submit" class="search-action-btn">Primeni filtere</button>
+        </form>
+    </aside>
+
+    <section class="results-area">
+        <form class="search-bar" method="GET" action="{% url 'build_search' %}">
+            <input type="hidden" name="min_price" value="{{ min_price }}">
+            <input type="hidden" name="max_price" value="{{ max_price }}">
+            <input type="hidden" name="sort" value="{{ sort }}">
+            <input type="text" name="q" class="search-box" placeholder="Pretraži..." value="{{ search_query }}">
+            <button type="submit" class="search-action-btn primary">Pretraži</button>
+        </form>
+
+        <div class="results-list">
+            {% for build in builds %}
+                <a href="{% url 'build_detail' id=build.id %}" class="result-item" style="text-decoration:none; color:inherit;">
+                    {% with first_image=build.images.first %}
+                        <div class="build-thumbnail">
+                            {% if first_image %}
+                                <img src="/static/{{ first_image.image }}" alt="{{ build.name }}">
+                            {% else %}
+                                <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=150" alt="{{ build.name }}">
+                            {% endif %}
+                        </div>
+                    {% endwith %}
+
+                    <div class="build-info-col">
+                        <span class="item-name">{{ build.name }}</span>
+                        <span class="item-user">by {{ build.iduser.user.username }}</span>
+                    </div>
+
+                    <div class="specs-col">
+                        <span class="spec-item">👍 {{ build.numoflikes }}</span>
+                        <span class="spec-item">👎 {{ build.numofdislikes }}</span>
+                    </div>
+
+                    <span class="item-price">{{ build.totalprice }} RSD</span>
+                </a>
+            {% empty %}
+                <p class="placeholder" style="text-align:center; padding: 40px 0;">
+                    U bazi podataka ne postoje računari koji ispunjavaju zadate kriterijume
+                </p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+{% endblock %}

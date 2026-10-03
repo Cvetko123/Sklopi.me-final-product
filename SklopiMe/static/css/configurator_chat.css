@@ -1,0 +1,19 @@
+/* Marko Ciric 2023/0133 - SSU 4.2: dopunski stilovi za AI chat konfigurator */
+
+.message.error {
+    color: #c0392b;
+    font-style: italic;
+}
+
+.ai-recommendations-heading {
+    font-weight: 600;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    margin: 0.5rem 0 0.25rem;
+    opacity: 0.75;
+}
+
+.rec-add:disabled {
+    opacity: 0.6;
+    cursor: default;
+}

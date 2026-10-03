@@ -1,0 +1,176 @@
+<!-- Autor: Marko Ćirić -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nalog | Sklopi.me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/account.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="account.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-area">
+    <section class="account-section">
+        <div class="account-container">
+
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="avatar-area">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <h1 id="displayUsername">tech_guru</h1>
+                    </div>
+                </div>
+                <button class="logout-btn" onclick="handleLogout()">
+                    <i class="fas fa-sign-out-alt"></i> Odjavi se
+                </button>
+            </div>
+
+            <!-- Stats Row -->
+            <div class="stats-row">
+                <div class="stat-card">
+                    <span class="stat-number">7</span>
+                    <span class="stat-label">Objavljenih računara</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">142</span>
+                    <span class="stat-label">Ukupno lajkova</span>
+                </div>
+            </div>
+
+            <div class="content-columns">
+                <!-- Left: Account Details -->
+                <div class="left-col">
+
+                    <!-- Account Info -->
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-id-card"></i>
+                            <h2>Informacije o nalogu</h2>
+                        </div>
+
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-user"></i> Korisničko ime</span>
+                            <span class="info-value" id="infoUsername">tech_guru</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-envelope"></i> Email adresa</span>
+                            <span class="info-value" id="infoEmail">tech_guru@email.com</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label"><i class="fas fa-shield-alt"></i> Status naloga</span>
+                            <span class="info-value status-active"><i class="fas fa-circle"></i> Aktivan</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: My Builds -->
+                <div class="right-col">
+                    <div class="info-card">
+                        <div class="info-card-header">
+                            <i class="fas fa-desktop"></i>
+                            <h2>Moji računari</h2>
+                        </div>
+
+                        <div class="my-builds-list">
+                            <a href="build-detail.html" class="my-build-item">
+                                <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=80" alt="RGB Overkill">
+                                <div class="my-build-info">
+                                    <span class="my-build-name">RGB Overkill</span>
+                                    <span class="my-build-meta">210.000 RSD • <i class="fas fa-thumbs-up"></i> 42</span>
+                                </div>
+                                <i class="fas fa-chevron-right my-build-arrow"></i>
+                            </a>
+                            <a href="build-detail.html" class="my-build-item">
+                                <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&q=80&w=80" alt="Budget King">
+                                <div class="my-build-info">
+                                    <span class="my-build-name">Budget King 2026</span>
+                                    <span class="my-build-meta">75.000 RSD • <i class="fas fa-thumbs-up"></i> 18</span>
+                                </div>
+                                <i class="fas fa-chevron-right my-build-arrow"></i>
+                            </a>
+                            <a href="build-detail.html" class="my-build-item">
+                                <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=80" alt="Stealth">
+                                <div class="my-build-info">
+                                    <span class="my-build-name">Stealth Black</span>
+                                    <span class="my-build-meta">190.000 RSD • <i class="fas fa-thumbs-up"></i> 82</span>
+                                </div>
+                                <i class="fas fa-chevron-right my-build-arrow"></i>
+                            </a>
+                        </div>
+
+                        <a href="configurator.html" class="new-build-btn">
+                            <i class="fas fa-plus"></i> Napravi novi računar
+                        </a>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="info-card danger-card">
+                        <div class="info-card-header danger-header">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <h2>Opasna zona</h2>
+                        </div>
+                        <p class="danger-text">Brisanjem naloga trajno ćete ukloniti sve vaše podatke, objavljene računare i konfiguracije. Ova akcija se <strong>ne može poništiti</strong>.</p>
+                        <button class="delete-account-btn" onclick="openDeleteModal()">
+                            <i class="fas fa-trash-alt"></i> Obriši nalog
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+</main>
+
+<!-- Delete Account Modal -->
+<div class="modal" id="deleteAccountModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2><i class="fas fa-exclamation-triangle"></i> Brisanje naloga</h2>
+            <button class="close-modal" onclick="closeDeleteModal()">&times;</button>
+        </div>
+        <div class="modal-body">
+            <p>Da li ste sigurni da želite da <strong>trajno obrišete</strong> nalog <strong>tech_guru</strong>?</p>
+            <p class="modal-warning">Svi vaši računari, konfiguracije i podaci biće nepovratno obrisani.</p>
+            <div class="confirm-input-group">
+                <label>Ukucajte <strong>OBRISI</strong> da potvrdite:</label>
+                <input type="text" id="deleteConfirmInput" placeholder="OBRISI">
+            </div>
+        </div>
+        <div class="modal-actions">
+            <button class="confirm-delete-btn" id="confirmDeleteBtn" onclick="handleDeleteAccount()" disabled>
+                <i class="fas fa-trash-alt"></i> Trajno obriši nalog
+            </button>
+            <button class="cancel-modal-btn" onclick="closeDeleteModal()">Otkaži</button>
+        </div>
+    </div>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+<script src="js/account.js"></script>
+</body>
+</html>

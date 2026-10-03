@@ -1,0 +1,52 @@
+<!-- Autor: Aleksandar Rašković 2023/0043 -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklopi.me</title>
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+    {% block head_extra %}
+        {#        Tu se dodaju css i js specificni za odredjenu stranicu#}
+    {% endblock %}
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo"
+             src="{% static 'images/logo_close.jpg' %}"
+             alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="{% url 'index' %}">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="{% url 'build_search' %}" class="nav-link">Računari</a></li>
+            <li><a href="{% url 'components' %}" class="nav-link">Komponente</a></li>
+            <li><a href="{% url 'configurator' %}" class="nav-link">Konfigurator</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'profile' %}" class="nav-link">Moj nalog</a></li>
+                <li><a href="{% url 'logout' %}" class="nav-link">Odlogujte se</a></li>
+            {% else %}
+                <li><a href="{% url 'login' %}" class="nav-link">Uloguj se</a></li>
+            {% endif %}
+        </ul>
+    </nav>
+</header>
+
+<main class="main-area">
+    {% block content %}
+
+    {% endblock %}
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+</body>
+</html>

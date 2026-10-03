@@ -1,0 +1,64 @@
+<!-- Autor: Aleksandar Cvetković -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Sklopi.me</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/forms.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-area">
+    <section class="form-section">
+        <div class="form-container">
+            <h1>Ulogujte se u vas nalog</h1>
+
+            <form class="auth-form" id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email adresa</label>
+                    <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Šira</label>
+                    <input type="password" id="password" name="password" placeholder="Unesite šifru" required>
+                </div>
+
+                <button type="submit" class="submit-btn">Ulogujte se</button>
+            </form>
+
+            <div class="form-footer">
+                <p>Nemate nalog? <a href="register.html" class="form-link">Napravite ga ovde</a></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+<script src="js/forms.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,47 @@
+<!-- Autor: Aleksandar Rašković 2023/0043 -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/index.css' %}">
+    <link rel="stylesheet" href="{% static 'css/build-detail.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+{% endblock %}
+
+{% block content %}
+    <section class="hero-section">
+        <h1>Sklopi svoj PC iz snova uz Sklopi.me</h1>
+        <p>Najsavremeniji alat za izbor komponenti. Uporedite cene, proverite kompatibilnost i podelite svoje
+            konfiguracije sa drugima.</p>
+
+        <a href="{% url 'components' %}" class="search-btn">Započni - Pretraži komponente</a>
+    </section>
+
+    <section class="builds-section">
+        <h2>Najpopularniji  računari</h2>
+        <div class="builds-grid">
+            {%  for build in popular_builds %}
+            <a href="{% url 'build_detail' build.id %}" class="build-card">
+                {% with first_image=build.images.first %}
+                        <div class="build-thumbnail">
+                            {% if first_image %}
+                                <img src="static/{{ first_image.image }}" alt="{{ build.name }}">
+                            {% else %}
+                                <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=150" alt="{{ build.name }}">
+                            {% endif %}
+                        </div>
+                {% endwith %}
+                <div class="build-info">
+                    <h3>{{ build.name }}</h3>
+                    <p class="build-price">{{ build.totalprice }} RSD</p>
+                    <span class="like-count">{{ build.numoflikes }}</span>
+                    <i class="fa-regular fa-thumbs-up"></i>
+                    <p class="build-user">by {{ build.iduser.user.username }}</p>
+                </div>
+            </a>
+            {% endfor %}
+
+        </div>
+    </section>
+{% endblock %}

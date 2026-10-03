@@ -1,0 +1,216 @@
+<!-- Autor: Marko Ćirić -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uredi komponentu | Sklopi.me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/component-edit.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-area">
+    <section class="edit-section">
+        <div class="edit-container">
+
+            <!-- Breadcrumb -->
+            <div class="breadcrumb">
+                <a href="components.html">Komponente</a>
+                <span>/</span>
+                <a href="component-search.html">Procesori</a>
+                <span>/</span>
+                <a href="component-detail.html">Intel Core i9-13900K</a>
+                <span>/</span>
+                <span class="current">Izmeni</span>
+            </div>
+
+            <div class="page-header">
+                <h1><i class="fa-regular fa-pen-to-square"></i> Izmeni komponentu</h1>
+                <p class="page-subtitle">Izmenite podatke o komponenti</p>
+            </div>
+
+            <form class="edit-form" id="componentEditForm">
+
+                <!-- Basic Info -->
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <i class="fas fa-info-circle"></i>
+                        <h2>Osnovne informacije</h2>
+                    </div>
+                    <div class="form-grid">
+                        <div class="form-group full-width">
+                            <label for="componentName">Naziv komponente</label>
+                            <input type="text" id="componentName" value="Intel Core i9-13900K" placeholder="Naziv komponente" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="componentCategory">Kategorija</label>
+                            <select id="componentCategory">
+                                <option value="cpu" selected>CPU - Procesor</option>
+                                <option value="gpu">GPU - Grafička karta</option>
+                                <option value="ram">RAM - Memorija</option>
+                                <option value="motherboard">Matična ploča</option>
+                                <option value="ssd">SSD / Disk</option>
+                                <option value="case">Kućište</option>
+                                <option value="psu">Napajanje</option>
+                                <option value="cooler">CPU Hladnjak</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="componentManufacturer">Proizvođač</label>
+                            <input type="text" id="componentManufacturer" value="Intel" placeholder="Proizvođač">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="componentDescription">Opis</label>
+                        <textarea id="componentDescription" rows="4" placeholder="Opis komponente..." req>Intel Core i9-13900K je najmoćniji procesor iz Intel 13. generacije. Idealan je za gaming, 3D rendering, video editovanje i sve druge zahtevne zadatke. Sa 24 jezgra (8 P-cores + 16 E-cores) i do 32 niti, ovaj procesor pruža neverovatnu performansu.</textarea>
+                    </div>
+                </div>
+
+                <!-- Specifications -->
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <i class="fas fa-microchip"></i>
+                        <h2>Specifikacije</h2>
+                    </div>
+                    <div class="specs-editor" id="specsEditor">
+                        <div class="spec-row" data-id="1">
+                            <input type="text" class="spec-key" value="Arhitektura" placeholder="Naziv specifikacije">
+                            <input type="text" class="spec-value" value="Raptor Lake" placeholder="Vrednost">
+                            <button type="button" class="spec-remove-btn" onclick="removeSpec(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="spec-row" data-id="2">
+                            <input type="text" class="spec-key" value="Jezgra / Niti" placeholder="Naziv specifikacije">
+                            <input type="text" class="spec-value" value="24 / 32" placeholder="Vrednost">
+                            <button type="button" class="spec-remove-btn" onclick="removeSpec(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="spec-row" data-id="3">
+                            <input type="text" class="spec-key" value="Frekvencija" placeholder="Naziv specifikacije">
+                            <input type="text" class="spec-value" value="3.0 - 5.8 GHz" placeholder="Vrednost">
+                            <button type="button" class="spec-remove-btn" onclick="removeSpec(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="spec-row" data-id="4">
+                            <input type="text" class="spec-key" value="TDP" placeholder="Naziv specifikacije">
+                            <input type="text" class="spec-value" value="125W" placeholder="Vrednost">
+                            <button type="button" class="spec-remove-btn" onclick="removeSpec(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="spec-row" data-id="5">
+                            <input type="text" class="spec-key" value="Socket" placeholder="Naziv specifikacije">
+                            <input type="text" class="spec-value" value="LGA1700" placeholder="Vrednost">
+                            <button type="button" class="spec-remove-btn" onclick="removeSpec(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="spec-row" data-id="6">
+                            <input type="text" class="spec-key" value="Cache" placeholder="Naziv specifikacije">
+                            <input type="text" class="spec-value" value="36 MB" placeholder="Vrednost">
+                            <button type="button" class="spec-remove-btn" onclick="removeSpec(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-spec-btn" onclick="addSpec()">
+                        <i class="fas fa-plus"></i> Dodaj specifikaciju
+                    </button>
+                </div>
+
+                <!-- Store Prices -->
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <i class="fas fa-tag"></i>
+                        <h2>Cene po prodavnicama</h2>
+                    </div>
+                    <div class="prices-editor" id="pricesEditor">
+                        <div class="price-row-header">
+                                <span>Prodavnica</span>
+                                <span>Link</span>
+                                <span>Cena (RSD)</span>
+                                <span></span>
+                            </div>
+                        <div class="price-row" data-id="1">
+                            <input type="text" class="store-name-input" value="Kompjuterski svet" placeholder="Naziv prodavnice" required>
+                            <input type="text" class="store-link-input" value="https://google.com" placeholder="Link ka prodavnici" required>
+                            <input type="number" class="store-price-input" value="45000" placeholder="Cena u RSD" required>
+                            <button type="button" class="spec-remove-btn" onclick="removePrice(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="price-row" data-id="2">
+                            <input type="text" class="store-name-input" value="Tehnomanija" placeholder="Naziv prodavnice" required>
+                            <input type="text" class="store-link-input" value="https://google.com" placeholder="Link ka prodavnici" required>
+                            <input type="number" class="store-price-input" value="46500" placeholder="Cena u RSD" required>
+                            <button type="button" class="spec-remove-btn" onclick="removePrice(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="price-row" data-id="3">
+                            <input type="text" class="store-name-input" value="PC Kamp" placeholder="Naziv prodavnice" required>
+                            <input type="text" class="store-link-input" value="https://google.com" placeholder="Link ka prodavnici" required>
+                            <input type="number" class="store-price-input" value="47200" placeholder="Cena u RSD" required>
+                            <button type="button" class="spec-remove-btn" onclick="removePrice(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="price-row" data-id="4">
+                            <input type="text" class="store-name-input" value="Gigatron" placeholder="Naziv prodavnice" required>
+                            <input type="text" class="store-link-input" value="https://gigatron.rs/proizvod/intel-core-i9-13900k-3ghz-5-8ghz-procesor-5032037258647" placeholder="Link ka prodavnici" required>
+                            <input type="number" class="store-price-input" value="48000" placeholder="Cena u RSD" required>
+                            <button type="button" class="spec-remove-btn" onclick="removePrice(this)"><i class="fas fa-times"></i></button>
+                        </div>
+                    </div>
+                    <button type="button" class="add-spec-btn" onclick="addPrice()">
+                        <i class="fas fa-plus"></i> Dodaj prodavnicu
+                    </button>
+                </div>
+
+                <!-- Image -->
+                <div class="form-card">
+                    <div class="form-card-header">
+                        <i class="fas fa-image"></i>
+                        <h2>Slika komponente</h2>
+                    </div>
+                    <div class="image-edit-area">
+                        <div class="current-image-preview">
+                            <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=300" alt="Trenutna slika" id="currentImagePreview">
+                            <p class="image-label">Trenutna slika</p>
+                        </div>
+                        <div class="image-upload-zone" id="imageUploadZone">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Kliknite da promenite sliku</p>
+                            <small>PNG, JPG, WEBP do 5MB</small>
+                            <input type="file" id="imageFileInput" accept="image/*" style="display:none">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">
+                        <i class="fas fa-save"></i> Sačuvaj izmene
+                    </button>
+                    <a href="component-detail.html" class="cancel-btn">
+                        <i class="fas fa-times"></i> Otkaži
+                    </a>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+<script src="js/component-edit.js"></script>
+</body>
+</html>

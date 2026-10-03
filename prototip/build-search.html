@@ -1,0 +1,176 @@
+<!-- Autor: Aleksandar Rašković -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sklopi.me</title>
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/build-search.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="search-layout">
+    <aside class="sidebar">
+        <details class="sort-dropdown">
+            <summary class="sort-btn">Sortiraj po...</summary>
+            <div class="sort-content">
+                <label><input type="radio" name="sort"> Datum: Novije ka Starijem</label>
+                <label><input type="radio" name="sort"> Datum: Starije ka Novijem</label>
+                <label><input type="radio" name="sort"> Popularnost: Rastuće</label>
+                <label><input type="radio" name="sort"> Popularnost: Opadajuće</label>
+                <label><input type="radio" name="sort"> Cena: Rastuće</label>
+                <label><input type="radio" name="sort"> Cena: Opadajuće</label>
+                <label><input type="radio" name="sort"> Naziv: A do Z</label>
+                <label><input type="radio" name="sort"> Naziv: Z do A</label>
+            </div>
+        </details>
+
+        <div class="filter-container">
+
+            <div class="filter-group">
+                <div class="filter-title">Cena</div>
+                <div class="input-row">
+                    <input type="number" placeholder="Min">
+                    <input type="number" placeholder="Max">
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-title">Veličina</div>
+                <label><input type="checkbox"> Full Tower</label>
+                <label><input type="checkbox"> Mid Tower</label>
+                <label><input type="checkbox"> MiniITX</label>
+            </div>
+
+            <div class="filter-group">
+                <div class="filter-title">
+                    Benchmark
+                </div>
+                <div class="benchmark-filter">
+                    <input type="text" class="benchmark-name" placeholder="Ime benchmark-a" value="Cinebench R23">
+                    <div class="input-row">
+                        <input type="number" placeholder="Min" value="2000">
+                        <input type="number" placeholder="Max">
+                    </div>
+                </div>
+                <div class="benchmark-filter">
+                    <input type="text" class="benchmark-name" placeholder="Ime benchmark-a">
+                    <div class="input-row">
+                        <input type="number" placeholder="Min">
+                        <input type="number" placeholder="Max">
+                    </div>
+                </div>
+                <div class="benchmark-buttons">
+                    <button class="add-benchmark">Dodaj benchmark filter</button>
+                    <button class="remove-benchmark">Ukloni zadnji benchmark filter</button>
+                </div>
+            </div>
+
+            <button class="search-action-btn">Primeni filtere</button>
+        </div>
+    </aside>
+
+    <section class="results-area">
+        <div class="search-bar">
+            <input type="text" class="search-box" placeholder="Pretraži...">
+            <button class="search-action-btn primary">Pretraži</button>
+        </div>
+        
+        <div class="results-list">
+            <div class="result-item">
+                <div class="build-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=800" alt="Build Preview">
+                </div>
+
+                <div class="build-info-col">
+                    <a href="build-detail.html" class="item-name">White Silence</a>
+                    <span class="item-user">by aleks_r</span>
+                </div>
+                
+                <div class="specs-col">
+                    <span class="spec-label">RTX 4070 Ti Super</span>
+                    <span class="spec-label">Ryzen 7 7800X3D</span>
+                </div>
+
+                <div class="meta-col">
+                    <span class="meta-label">Mid Tower</span>
+                    <span class="meta-label">White / RGB</span>
+                </div>
+
+                <span class="item-price">145.000 RSD</span>
+            </div>
+
+            <div class="result-item">
+                <div class="build-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800" alt="Build Preview">
+                </div>
+
+                <div class="build-info-col">
+                    <a href="build-detail.html" class="item-name">RGB Overkill</a>
+                    <span class="item-user">by tech_guru</span>
+                </div>
+                
+                <div class="specs-col">
+                    <span class="spec-label">RTX 4090</span>
+                    <span class="spec-label">Core i9-13900K</span>
+                </div>
+
+                <div class="meta-col">
+                    <span class="meta-label">Full Tower</span>
+                    <span class="meta-label">Black / RGB</span>
+                </div>
+
+                <span class="item-price">210.000 RSD</span>
+            </div>
+
+            <div class="result-item">
+                <div class="build-thumbnail">
+                    <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&q=80&w=800" alt="Build Preview">
+                </div>
+
+                <div class="build-info-col">
+                    <a href="build-detail.html" class="item-name">Budget King 2026</a>
+                    <span class="item-user">by aleks_r</span>
+                </div>
+                
+                <div class="specs-col">
+                    <span class="spec-label">RTX 5090</span>
+                    <span class="spec-label">Ryzen 9 9950X3D2</span>
+                </div>
+
+                <div class="meta-col">
+                    <span class="meta-label">Full Tower</span>
+                    <span class="meta-label">Silver / RGB</span>
+                </div>
+
+                <span class="item-price">75.000 RSD</span>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+</body>
+</html>

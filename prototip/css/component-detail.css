@@ -1,0 +1,430 @@
+/* Autor: Aleksandar Cvetković */
+.component-detail-section {
+    padding: 40px 20px;
+    background-color: #f8f9fa;
+}
+
+.component-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Breadcrumb */
+.breadcrumb {
+    margin-bottom: 30px;
+    font-size: 0.95rem;
+    color: #777;
+}
+
+.breadcrumb a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.breadcrumb a:hover {
+    color: var(--accent-dark);
+}
+
+.breadcrumb span {
+    margin: 0 10px;
+}
+
+/* Main Content Layout */
+.component-content {
+    display: grid;
+    grid-template-columns: 400px 1fr;
+    gap: 40px;
+    background: white;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Left Column */
+.left-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.image-container {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.component-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Rating Section */
+.rating-section {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    flex-wrap: wrap;
+}
+
+.rating i {
+    color: #ffc107;
+    font-size: 1.2rem;
+}
+
+.rating-text {
+    margin-left: 10px;
+    color: #555;
+    font-weight: 600;
+}
+
+/* Right Column */
+.right-column {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* Component Header */
+.component-header h1 {
+    font-size: 2rem;
+    margin: 0 0 5px 0;
+    color: var(--text-color);
+}
+
+.component-category {
+    color: #777;
+    font-size: 0.95rem;
+    margin: 0;
+}
+
+/* Price Highlight */
+.price-highlight {
+    background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-dark) 100%);
+    color: white;
+    padding: 20px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.add-btn {
+    background: var(--accent-color);
+    color: white;
+    padding: 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.price-highlight .label {
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.price-highlight .price {
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.price-highlight .store {
+    font-size: 0.85rem;
+    opacity: 0.85;
+}
+
+/* Specifications Section */
+.specs-section h2,
+.prices-section h2,
+.description-section h2 {
+    font-size: 1.3rem;
+    color: var(--text-color);
+    margin: 0 0 15px 0;
+    border-bottom: 2px solid var(--accent-color);
+    padding-bottom: 10px;
+}
+
+.specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.spec-item {
+    background-color: #f9f9f9;
+    padding: 12px;
+    border-radius: 6px;
+    border-left: 4px solid var(--accent-color);
+}
+
+.spec-label {
+    display: block;
+    font-size: 0.85rem;
+    color: #777;
+    font-weight: 600;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.spec-value {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-color);
+    font-weight: 600;
+}
+
+/* Prices Table */
+.prices-table-wrapper {
+    overflow-x: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.prices-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+.prices-table thead {
+    background-color: var(--accent-color);
+    color: white;
+}
+
+.prices-table th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+}
+
+.prices-table td {
+    padding: 12px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.prices-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.prices-table tbody tr:hover {
+    background-color: #f9f9f9;
+}
+
+.prices-table tbody tr.best-price {
+    background-color: #f0fdf4;
+    border-left: 4px solid #27ae60;
+}
+
+/* Store Info */
+.store-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.store-name {
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.best-badge {
+    display: inline-block;
+    background-color: #27ae60;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    width: fit-content;
+}
+
+/* Price Cell */
+.price-cell {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--accent-color);
+}
+
+/* Availability */
+.availability {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.availability.in-stock {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.availability.out-of-stock {
+    background-color: #f8d7da;
+    color: #721c24;
+}
+
+.availability i {
+    font-size: 1rem;
+}
+
+/* Buttons */
+.btn-small {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.btn-small:hover {
+    background-color: var(--accent-dark);
+}
+
+/* Description Section */
+.description-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+}
+
+.description-section p {
+    margin: 0 0 15px 0;
+    color: #555;
+    line-height: 1.7;
+    font-size: 0.95rem;
+}
+
+.description-section p:last-child {
+    margin-bottom: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .component-content {
+        grid-template-columns: 1fr;
+    }
+
+    .left-column {
+        order: -1;
+    }
+
+    .specs-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .component-content {
+        padding: 20px;
+    }
+
+    .component-header h1 {
+        font-size: 1.5rem;
+    }
+
+    .price-highlight {
+        padding: 15px;
+    }
+
+    .price-highlight .price {
+        font-size: 1.5rem;
+    }
+
+    .specs-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .prices-table {
+        font-size: 0.9rem;
+    }
+
+    .prices-table th,
+    .prices-table td {
+        padding: 8px;
+    }
+
+    .specs-section h2,
+    .prices-section h2,
+    .description-section h2 {
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .component-content {
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .specs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .component-header h1 {
+        font-size: 1.2rem;
+    }
+
+    .price-highlight .price {
+        font-size: 1.3rem;
+    }
+
+    .prices-table {
+        font-size: 0.8rem;
+    }
+
+    .prices-table th,
+    .prices-table td {
+        padding: 6px;
+    }
+
+    .store-info {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .best-badge {
+        margin-left: 10px;
+    }
+}
+.edit-component-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background-color: transparent;
+    color: var(--accent-color);
+    border: 2px solid var(--accent-color);
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+.edit-component-btn:hover {
+    background-color: var(--accent-color);
+    color: white;
+}

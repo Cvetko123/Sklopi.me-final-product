@@ -1,0 +1,227 @@
+<!-- Autor: Aleksandar Cvetković -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Build detalji | Sklopi.me</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/common.css">
+    <link rel="stylesheet" href="css/build-detail.css">
+</head>
+<body>
+
+<header class="main-header">
+    <div class="logo-container">
+        <img class="logo" src="https://static.wikia.nocookie.net/wowpedia/images/2/21/Kohor.jpg/revision/latest?cb=20151018120335" alt="Sklopi.me Logo">
+        <span><a class="brand-name" href="index.html">Sklopi.me</a></span>
+    </div>
+
+    <nav class="nav-menu">
+        <ul class="nav-list">
+            <li><a href="build-search.html" class="nav-link">Računari</a></li>
+            <li><a href="components.html" class="nav-link">Komponente</a></li>
+            <li><a href="configurator.html" class="nav-link">Konfigurator</a></li>
+            <li><a href="login.html" class="nav-link">Moj nalog</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="main-area">
+    <section class="build-detail-section">
+        <div class="build-container">
+            <!-- Build Header -->
+            <div class="build-header">
+                <div class="build-title-area">
+                    <h1 id="buildTitle">RGB Overkill</h1>
+                    <p class="build-user-info">
+                        <span id="buildAuthor">by tech_guru</span>
+                        <span class="separator">•</span>
+                        <span id="buildDate">15.04.2026</span>
+                    </p>
+                </div>
+                <div class="build-actions">
+                    <button class="like-btn" id="likeBtn">
+                        <i class="fa-regular fa-thumbs-up"></i>
+                        <span class="like-count" id="likeCount">42</span>
+                    </button>
+                    <button class="dislike-btn" id="dislikeBtn">
+                        <i class="fa-regular fa-thumbs-down"></i>
+                        <span class="dislike-count" id="dislikeCount">3</span>
+                    </button>
+                    <button class="edit-btn" id="editBtn">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+			<button class="delete-btn" id="deleteBtn">
+                        Obriši
+                    </button>
+                </div>
+            </div>
+
+            <!-- Images Gallery -->
+            <div class="images-section">
+                <div class="main-image-container">
+                    <img id="mainImage" src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800" alt="Build main image" class="main-image">
+                </div>
+                <div class="thumbnails-container">
+                    <div class="thumbnail active" onclick="changeMainImage(this)">
+                        <img src="https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=150" alt="Thumb 1">
+                        <button type="button" class="thumbnail-remove-btn" onclick="removeThumbnail(event)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="thumbnail" onclick="changeMainImage(this)">
+                        <img src="https://images.unsplash.com/photo-1587202372775-e229f172b9d7?auto=format&fit=crop&q=80&w=150" alt="Thumb 2">
+                        <button type="button" class="thumbnail-remove-btn" onclick="removeThumbnail(event)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="thumbnail" onclick="changeMainImage(this)">
+                        <img src="https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&q=80&w=150" alt="Thumb 3">
+                        <button type="button" class="thumbnail-remove-btn" onclick="removeThumbnail(event)">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="content-wrapper">
+                <!-- Left Column: Description and Benchmarks -->
+                <div class="left-column">
+                    <!-- Description -->
+                    <div class="section">
+                        <h2>Opis</h2>
+                        <p id="buildDescription" class="description-text">
+                            Ovaj računar je idealan za gaming i sve zahtevne zadatke. Kombinacija najnovije NVIDIA RTX 4090 grafičke karte sa Intel Core i9-13900K procesora pruža neverovatne performanse. Sveže hlađenje sa dual tower cooler sistemom održava temperature stabilnim čak i pri maksimalnom opterećenju. Sve je okičeno sa RGB osvetljenjem za spektakularnu estetiku.
+                        </p>
+                    </div>
+
+                    <!-- Benchmarks -->
+                    <div class="section">
+                        <h2>Rezultati benchmark-a</h2>
+                        <div class="benchmarks-table-wrapper">
+                            <table class="benchmarks-table">
+                                <thead>
+                                    <tr>
+                                        <th>Benchmark</th>
+                                        <th>Rezultat</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="benchmarkTableBody">
+                                    <tr>
+                                        <td>3DMark TimeSpy</td>
+                                        <td>22.450</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cinebench R23 Multi-Core</td>
+                                        <td>23.850 poena</td>
+                                    </tr>
+                                    <tr>
+                                        <td>GTA VI</td>
+                                        <td>180 FPS (Ultra)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cyberpunk 2077</td>
+                                        <td>165 FPS (High)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Components -->
+                <div class="right-column">
+                    <div class="section sticky-section">
+                        <h2>Korišćene komponente</h2>
+                        <div class="components-list" id="componentsList">
+                            <div class="component">
+                                <span class="component-label">Procesor</span>
+                                <span class="component-value">Intel Core i9-13900K</span>
+                                <span class="component-price">45.000 RSD</span>
+                            </div>
+                            <div class="component">
+                                <span class="component-label">Grafička karta</span>
+                                <span class="component-value">NVIDIA RTX 4090</span>
+                                <span class="component-price">120.000 RSD</span>
+                            </div>
+                            <div class="component">
+                                <span class="component-label">RAM memorija</span>
+                                <span class="component-value">Corsair Dominator Platinum 32GB</span>
+                                <span class="component-price">12.000 RSD</span>
+                            </div>
+                            <div class="component">
+                                <span class="component-label">SSD</span>
+                                <span class="component-value">Samsung 990 Pro 2TB</span>
+                                <span class="component-price">18.000 RSD</span>
+                            </div>
+                            <div class="component">
+                                <span class="component-label">Matična ploča</span>
+                                <span class="component-value">ASUS ROG Maximus Z790</span>
+                                <span class="component-price">28.000 RSD</span>
+                            </div>
+                        </div>
+                        <div class="total-price">
+                            <span>Ukupna cena:</span>
+                            <span class="price">223.000 RSD</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<!-- Edit Modal -->
+<div class="modal" id="editModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Uredi Računar</h2>
+            <button class="close-modal" onclick="closeEditModal()">&times;</button>
+        </div>
+        <form id="editForm" class="edit-form">
+            <div class="form-group">
+                <label>Naslov</label>
+                <input type="text" id="editTitle" placeholder="Naslov build-a" required>
+            </div>
+
+            <div class="form-group">
+                <label>Opis</label>
+                <textarea id="editDescription" placeholder="Opis build-a" required></textarea>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="save-btn">Sačuvaj promene</button>
+                <button type="button" class="cancel-btn" onclick="closeEditModal()">Otkaži</button>
+            </div>
+        </form>
+    </div>
+</div>
+<!-- Confrim Delete Modal -->
+<div class="modal" id="deleteModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h2>Izbriši računar</h2>
+            <button class="close-modal" onclick="closeDeleteModal()">&times;</button>
+        </div>
+        <div class="delete-confirmation">
+            <p>Da li ste sigurni da želite da obrišete ovaj Računar?</p>
+            <div class="form-actions">
+                <button type="button" class="delete-btn" onclick="handleDelete()">Obriši</button>
+                <button type="button" class="cancel-btn" onclick="closeDeleteModal()">Otkaži</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="main-footer">
+    <div class="footer-content">
+        <p>Sklopi.me • Aleksandar Rašković • Aleksandar Cvetković • Marko Ćirić</p>
+    </div>
+</footer>
+
+<script src="js/build-detail.js"></script>
+</body>
+</html>
+

@@ -1,0 +1,162 @@
+<!-- Autor: Marko Ciric 2023/0133 -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/build-detail.css' %}">
+    <script src="{% static 'js/build_detail.js' %}" defer></script>
+{% endblock %}
+
+{% block content %}
+<section class="build-detail-section">
+    <div id="build-data"
+        data-build-id="{{ build.id }}"
+        data-rate-url="{% url 'rate_build' id=build.id %}"
+        data-edit-url="{% url 'edit_build' id=build.id %}"
+        data-delete-url="{% url 'delete_build' id=build.id %}"
+        data-is-owner="{{ is_owner|yesno:'true,false' }}">
+    </div>
+    <div class="build-container">
+        <div class="build-header">
+            <div class="build-title-area">
+                <h1 id="buildTitle">{{ build.name }}</h1>
+                <p class="build-user-info">
+                    <span id="buildAuthor">by {{ build.iduser.user.username }}</span>
+                </p>
+            </div>
+            <div class="build-actions">
+                <button class="like-btn {% if user_vote == 'like' %}liked{% endif %}" id="likeBtn">
+                    <i class="fa-regular fa-thumbs-up"></i>
+                    <span class="like-count" id="likeCount">{{ build.numoflikes }}</span>
+                </button>
+                <button class="dislike-btn {% if user_vote == 'dislike' %}disliked{% endif %}" id="dislikeBtn">
+                    <i class="fa-regular fa-thumbs-down"></i>
+                    <span class="dislike-count" id="dislikeCount">{{ build.numofdislikes }}</span>
+                </button>
+                {% if is_owner %}
+                    <button class="edit-btn" id="editBtn">
+                        <i class="fa-regular fa-pen-to-square"></i>
+                    </button>
+                    <button class="delete-btn" id="deleteBtn">
+                        Obriši
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="images-section">
+            <div class="main-image-container">
+                {% with first_image=images.first %}
+                    <img id="mainImage"
+                         src="{% if first_image %}{% static first_image.image.name %}{% else %}https://images.unsplash.com/photo-1591488320449-011701bb6704?auto=format&fit=crop&q=80&w=800{% endif %}"
+                         alt="{{ build.name }}" class="main-image">
+                {% endwith %}
+            </div>
+            <div class="thumbnails-container">
+                {% for img in images %}
+                    <div class="thumbnail {% if forloop.first %}active{% endif %}" onclick="changeMainImage(this)">
+                        <img src="{% static img.image.name %}" alt="Slika {{ forloop.counter }}">
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="content-wrapper">
+            <div class="left-column">
+                <div class="section">
+                    <h2>Opis</h2>
+                    <p id="buildDescription" class="description-text">{{ build.description }}</p>
+                </div>
+
+                <div class="section">
+                    <h2>Rezultati benchmark-a</h2>
+                    <div class="benchmarks-table-wrapper">
+                        <table class="benchmarks-table">
+                            <thead>
+                                <tr>
+                                    <th>Benchmark</th>
+                                    <th>Rezultat</th>
+                                </tr>
+                            </thead>
+                            <tbody id="benchmarkTableBody">
+                                {% for benchmark in benchmarks %}
+                                    <tr>
+                                        <td>{{ benchmark.name }}</td>
+                                        <td>{{ benchmark.value }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="right-column">
+                <div class="section sticky-section">
+                    <h2>Korišćene komponente</h2>
+                    <div class="components-list" id="componentsList">
+                        {% for bc in build_components %}
+                            <div class="component">
+                                <span class="component-value">{{ bc.idcomponent.name }}</span>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <div class="total-price">
+                        <span>Ukupna cena:</span>
+                        <span class="price">{{ build.totalprice }} RSD</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% if is_owner %}
+    <div class="modal" id="editModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Uredi Računar</h2>
+                <button type="button" class="close-modal">&times;</button>
+            </div>
+            <form id="editForm" class="edit-form">
+                <div class="form-group">
+                    <label>Naslov</label>
+                    <input type="text" id="editTitle" placeholder="Naslov build-a" required>
+                </div>
+                <div class="form-group">
+                    <label>Opis</label>
+                    <textarea id="editDescription" placeholder="Opis build-a" required></textarea>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="save-btn">Sačuvaj promene</button>
+                    <button type="button" class="cancel-btn">Otkaži</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="deleteModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Izbriši računar</h2>
+                <button type="button" class="close-modal">&times;</button>
+            </div>
+            <div class="delete-confirmation">
+                <p>Da li ste sigurni da želite da obrišete ovaj Računar?</p>
+                <div class="form-actions">
+                    <button type="button" class="delete-btn">Obriši</button>
+                    <button type="button" class="cancel-btn">Otkaži</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+{% if is_owner %}
+<form id="csrfCarrierForm" style="display:none;">{% csrf_token %}</form>
+{% else %}
+<form id="csrfCarrierForm" style="display:none;">{% csrf_token %}</form>
+{% endif %}
+{% endblock %}

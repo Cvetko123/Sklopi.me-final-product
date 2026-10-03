@@ -1,0 +1,23 @@
+<!-- Autor: Aleksandar Rašković 2023/0043 -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/components.css' %}">
+{% endblock %}
+
+{% block content %}
+    <h1 class="page-title">Pretraži Komponente</h1>
+
+    <div class="components-grid">
+        <a href="{% url 'component_search' 'cpu' %}" class="component-link">CPU</a>
+        <a href="{% url 'component_search' 'cpucooler' %}" class="component-link">CPU Hladnjaci</a>
+        <a href="{% url 'component_search' 'motherboard' %}" class="component-link">Matične ploče</a>
+        <a href="{% url 'component_search' 'ram' %}" class="component-link">RAM</a>
+        <a href="{% url 'component_search' 'storage' %}" class="component-link">Diskovi</a>
+        <a href="{% url 'component_search' 'gpu' %}" class="component-link">GPU</a>
+        <a href="{% url 'component_search' 'case' %}" class="component-link">Kućišta</a>
+        <a href="{% url 'component_search' 'powersupply' %}" class="component-link">Napajanja</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,66 @@
+<!-- Autor: Aleksandar Cvetković 2023/0150 -->
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head_extra %}
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="main-area">
+    <section class="form-section">
+        <div class="form-container">
+            <h1>Napravi svoj nalog</h1>
+            <p class="form-subtitle">Pridruzi se Sklopi.me!</p>
+
+            <form class="auth-form" method="post" novalidate>
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="username">{{ form.username.label }}</label>
+                    {{ form.username }}
+                    {{ form.username.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="email">{{ form.email.label }}</label>
+                    {{ form.email }}
+                    {{ form.email.errors }}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">{{ form.password1.label }}</label>
+                    {{ form.password1 }}
+                    {{ form.password1.errors }}
+                    <div id="passwordFeedback"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirmPassword">{{ form.password2.label }}</label>
+                    {{ form.password2 }}
+                    {{ form.password2.errors }}
+                    <div id="passwordMatchFeedback"></div>
+                </div>
+
+                {% if form.non_field_errors %}
+                    <div class="form-errors">
+                        {% for error in form.non_field_errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <button type="submit" class="submit-btn">Kreirajte nalog</button>
+            </form>
+
+            <div class="form-footer">
+                <p>Već imate nalog? <a href="{% url 'login' %}" class="form-link">Ulogujte se ovde</a></p>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% endblock %}
+
+
